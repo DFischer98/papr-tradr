@@ -18,5 +18,10 @@
   "homepage": "https://github.com/nyu-csci-ua-0480-008-spring-2018/daf452-final-project#readme",
   "dependencies": {
     "npm": "^5.8.0"
+  },
+  "devDependencies": {
+    "express": "^4.16.3",
+    "hbs": "^4.0.1",
+    "mongoose": "^5.0.12"
   }
 }
