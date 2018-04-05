@@ -1,0 +1,22 @@
+{
+  "name": "final-project-daf452",
+  "version": "1.0.0",
+  "description": "AIT Spring 2018 Final Project. Stock paper-trading web application.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nyu-csci-ua-0480-008-spring-2018/daf452-final-project.git"
+  },
+  "author": "Daniel Fischer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nyu-csci-ua-0480-008-spring-2018/daf452-final-project/issues"
+  },
+  "homepage": "https://github.com/nyu-csci-ua-0480-008-spring-2018/daf452-final-project#readme",
+  "dependencies": {
+    "npm": "^5.8.0"
+  }
+}

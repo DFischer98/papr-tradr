@@ -1,77 +1,79 @@
-The content below is an example project proposal / requirements document. Replace the text below the lines marked "__TODO__" with details specific to your project. Remove the "TODO" lines.
 
-(___TODO__: your project name_)
-
-# Shoppy Shoperson 
+# Tradify
 
 ## Overview
 
-(___TODO__: a brief one or two paragraph, high-level description of your project_)
+Trading securities is an exercise in boredom, tapping away at your brokerage's application in the vain hope of deriving profit from the enigmatic juggernaut of global capitalism...but it doesn't have to be! Tradify introduces a social element to investing for those who don't have a reserved parking spot at the country club, allowing users to post their trades or speculative thoughts and comment on the activity of others. Keep up-to-date your friends and engage in the *good* kind of trade-war by competing for the best picks and maximum profit.
 
-Remembering what to buy at the grocery store is waaaaay too difficult. Also, shopping for groceries when you're hungry leads to regrettable purchases. Sooo... that's where Shoppy Shoperson comes in!
-
-Shoppy Shoperson is a web app that will allow users to keep track of multiple grocery lists. Users can register and login. Once they're logged in, they can create or view their grocery list. For every list that they have, they can add items to the list or cross off items.
+Tradify is a web-app that will allow users to post paper trades that are visible to others. The application will track and display the performance of these trades and other users will be able to provide comments on these activities. These trades are visible to the public, users will be able to create accounts and log-in so they can post their own and comment on others'.
 
 
 ## Data Model
 
-(___TODO__: a description of your application's data and their relationships to each other_) 
 
-The application will store Users, Lists and Items
+The application will store Users, Trades and Comments
 
-* users can have multiple lists (via references)
-* each list can have multiple items (by embedding)
-
-(___TODO__: sample documents_)
+* Users can have multiple Trades (via references)
+* Users can have multiple friends [other Users] (via references)
+* each Trade can have multiple Comments (by embedding)
 
 An Example User:
 
 ```javascript
 {
-  username: "shannonshopper",
+  username: "wBuffett30",
   hash: // a password hash,
-  lists: // an array of references to List documents
+  trades: // an array of references to Trade documents,
+  friends: // an array of references to other Users
 }
 ```
 
-An Example List with Embedded Items:
+An Example Trade with Embedded Comments:
 
 ```javascript
 {
-  user: // a reference to a User object
-  name: "Breakfast foods",
-  items: [
-    { name: "pancakes", quantity: "9876", checked: false},
-    { name: "ramen", quantity: "2", checked: true},
+  user: // a reference to a User object,
+  ticker: "BRK.A",
+  priceAtCreation: 293436.94,
+  action: "buy",
+  confidence: "high",
+  comments: [
+    { name: [User reference], content: "Suggesting your own stock, really?"}
   ],
-  createdAt: // timestamp
+  createdAt: // timestamp,
+  slug: //unique URL to trade info page
 }
 ```
 
 
-## [Link to Commented First Draft Schema](db.js) 
-
-(___TODO__: create a first draft of your Schemas in db.js and link to it_)
+## [First Draft Schema](src/db.js)
 
 ## Wireframes
 
-(___TODO__: wireframes for all of the pages on your site; they can be as simple as photos of drawings or you can use a tool like Balsamiq, Omnigraffle, etc._)
+/ - index
 
-/list/create - page for creating a new shopping list
+![index](documentation/homepage-wireframe.png)
 
-![list create](documentation/list-create.png)
+/my-account - displaying info about your account, trades, and friends
 
-/list - page for showing all shopping lists
+![my-account](documentation/account-page-wireframe.png)
 
-![list](documentation/list.png)
+/login & /register - pages for user account management
 
-/list/slug - page for showing specific shopping list
+![login-register](documentation/login-register-wireframe.png)
 
-![list](documentation/list-slug.png)
+/new-trade - page for submitting a new paper trade
+
+![new-trade](documentation/new-trade-wireframe.png)
+
+/trade/slug - page for displaying detailed information and comments about a trade
+
+![trade-info](documentation/detailed-trade-wireframe.png)
+
 
 ## Site map
 
-(___TODO__: draw out a site map that shows how pages are related to each other_)
+![sitemap](documentation/sitemap.png)
 
 Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia/commons/2/20/Sitemap_google.jpg), but you can create one without the screenshots, drop shadows, etc. ... just names of pages and where they flow to.
 
@@ -80,37 +82,28 @@ Here's a [complex example from wikipedia](https://upload.wikimedia.org/wikipedia
 (___TODO__: write out how your application will be used through [user stories](http://en.wikipedia.org/wiki/User_story#Format) and / or [use cases](https://www.mongodb.com/download-center?jmp=docs&_ga=1.47552679.1838903181.1489282706#previous)_)
 
 1. as non-registered user, I can register a new account with the site
-2. as a user, I can log in to the site
-3. as a user, I can create a new grocery list
-4. as a user, I can view all of the grocery lists I've created in a single list
-5. as a user, I can add items to an existing grocery list
-6. as a user, I can cross off items in an existing grocery list
+2. as a non-registered user, I can view and sort trades
+3. as a user, I can log in to the site
+4. as a user, I can create a new trade
+5. as a user, I can view all of the trades I've made
+6. as a user, I can add comments to existing trades
+7. as a user, I can add friends to follow
+8. as a user, I can view my friends and their trades
 
 ## Research Topics
 
-(___TODO__: the research topics that you're planning on working on along with their point values... and the total points of research topics listed_)
-
 * (5 points) Integrate user authentication
-    * I'm going to be using passport for user authentication
-    * And account has been made for testing; I'll email you the password
-    * see <code>cs.nyu.edu/~jversoza/ait-final/register</code> for register page
-    * see <code>cs.nyu.edu/~jversoza/ait-final/login</code> for login page
-* (4 points) Perform client side form validation using a JavaScript library
-    * see <code>cs.nyu.edu/~jversoza/ait-final/my-form</code>
-    * if you put in a number that's greater than 5, an error message will appear in the dom
+    * Using passport for user auth
+
 * (5 points) vue.js
-    * used vue.js as the frontend framework; it's a challenging library to learn, so I've assigned it 5 points
+    * Would like to use vue.js for this project, still tbd
 
-10 points total out of 8 required points (___TODO__: addtional points will __not__ count for extra credit_)
+10 points total out of 8 required points
 
 
-## [Link to Initial Main Project File](app.js) 
+## [Link to Initial Main Project File](app.js)
 
-(___TODO__: create a skeleton Express application with a package.json, app.js, views folder, etc. ... and link to your initial app.js_)
 
 ## Annotations / References Used
 
-(___TODO__: list any tutorials/references/etc. that you've based your code off of_)
-
-1. [passport.js authentication docs](http://passportjs.org/docs) - (add link to source code that was based on this)
-2. [tutorial on vue.js](https://vuejs.org/v2/guide/) - (add link to source code that was based on this)
+1. [IEX Market API](https://iextrading.com/developer/docs/)
