@@ -1,0 +1,27 @@
+<h1>Daniel's Final Project</h1>
+<p class='subheader'>Hosted on Digital Ocean because I wanted to spend 4 hours configuring a linux box</p>
+<div class="container inset">
+    <p>Here's a form and some stuff.</p>
+    <form class="" action="/" method="post">
+        <label for="ticker">Ticker</label>
+        <input type="text" name="ticker">
+        <label>Action</label>
+        <input type="radio" value="buy" id="buy" name="action">
+            <label class="radio-label" id="buy-label" for="buy">Buy</label>
+        <input type="radio" value="sell" id="sell" name="action">
+            <label class="radio-label" id="sell-label" for="sell">Sell</label>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+<div class="container">
+    {{#if trade}}
+    <p>Trades found:</p>
+    <ul>
+        {{#each trade}}
+        <li>{{ticker}} • {{action}} • {{formatDateTime time}}</li>
+        {{/each}}
+    </ul>
+    {{else}}
+    <p>No records found. Submit one!</p>
+    {{/if}}
+</div>

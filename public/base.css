@@ -1,0 +1,144 @@
+body{
+    font-family: 'Lato', sans-serif;
+    color: #333;
+    line-height: 1.5;
+    margin: 0px;
+}
+
+::-moz-selection{
+    color: #2F525A;
+    background: #61FFD0;
+}
+
+::selection {
+    color: #2F525A;
+    background: #61FFD0;
+}
+
+h1{
+    font-family: 'Roboto', 'Helvetica', sans-serif;
+    font-weight: 100;
+    font-size: 72pt;
+    margin: 20px 0px 5px 10px;
+}
+
+.subheader{
+    color: #666;
+    margin: 0;
+    padding: 0px 0px 15px 15px;
+    font-family: 'Roboto', 'Helvetica', sans-serif;
+    font-size: 14pt;
+    font-weight: 300;
+}
+
+.container{
+    padding: 10px 0px 10px 15px;
+}
+
+.inset{
+    background-color: #E5EAED;
+    color: #555;
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+}
+
+label{
+    font-family: 'Roboto';
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    display: block;
+}
+
+input[type="text"]:focus{
+    outline: none;
+}
+
+input[type="text"]{
+    display: block;
+    background-color: #FFF;
+    color: grey;
+    border-radius: 5px;
+    padding: .7em 1em;
+    text-transform: uppercase;
+    width: 75px;
+    border: none;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+    margin-bottom: 15px;
+}
+
+input[type="radio"]{
+    position: absolute;
+    visibility: hidden;
+    display: none;
+}
+
+.radio-label{
+    background-color: #FFF;
+    padding: .3em 1em;
+    cursor: pointer;
+    display: inline-block;
+    width: 45px;
+    height: 20px;
+    text-align: center;
+    font-size: 14px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+
+    transition: box-shadow .5s ease;
+    -webkit-transition: box-shadow .5s ease;
+    -moz-transition: box-shadow .5s ease;
+}
+
+#buy-label{
+    border-radius: 5px 0px 0px 5px;
+}
+
+#sell-label{
+    margin-left: -3px;
+    border-radius: 0px 5px 5px 0px;
+    border-left: 1px solid #eee;
+}
+
+input[type="radio"]:checked + #buy-label{
+    background: linear-gradient(-190deg, #b3f9b2 0%, #8df53f 100%);
+    box-shadow: 0px 2px 7px 0px rgba(30, 156, 7, 0.5);
+    color: #375e36;
+}
+
+input[type="radio"]:checked + #sell-label{
+    background: linear-gradient(-190deg, #FEB692 0%, #EA5455 100%);
+    box-shadow: 1px 1px 6px 0px rgba(138, 3, 22, 0.5);
+    color: #603d3d;
+    border-left: 0px;
+    width: 46px;
+}
+
+button[type="submit"]{
+    margin-top: 30px;
+    width: 100px;
+    display: block;
+    padding: .7em 1em;
+
+    color: #2a6357;
+    font-size: 14px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+
+    background: linear-gradient(-180deg, #9afbf2 0%, #21dcba 100%);
+    background-color: #FFF;
+
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+    cursor: pointer;
+
+    transition: box-shadow .5s ease;
+    -webkit-transition: box-shadow .5s ease;
+    -moz-transition: box-shadow .5s ease;
+}
+
+button[type="submit"]:hover{
+    box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+li{
+    list-style-type: none;
+}

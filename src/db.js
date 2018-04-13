@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const URLSlugs = require('mongoose-url-slugs');
+const config = require('./config.js');
 
 // user schema, changes TBD depending on implementation of passport auth
 const UserSchema = new mongoose.Schema({
@@ -21,7 +22,7 @@ const TradeSchema = new mongoose.Schema({
 	comments: [
 		{
 			_user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-			content: "Suggesting your own stock, really?",
+			content: String,
 			time: { type: Date, default: Date.now }
 		}
 	],
@@ -31,4 +32,11 @@ const TradeSchema = new mongoose.Schema({
 mongoose.model('User', UserSchema);
 mongoose.model('Trade', TradeSchema);
 
-//TODO: mongoose.connect
+// Connect to DB
+if (config.get('env') === 'production'){
+	mongoose.connect(`mongodb://${config.get('db.user')}:${config.get('db.pwd')}@${config.get('db.host')}/${config.get('db.name')}`);
+}
+//no auth in development
+else {
+	mongoose.connect(`mongodb://${config.get('db.host')}/${config.get('db.name')}`);
+}

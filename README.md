@@ -91,10 +91,14 @@ An Example Trade with Embedded Comments:
 * (5 points) Integrate user authentication
     * Using passport for user auth
 
+* (?? points) Using Node-convict for environment confguration
+    * Implemented
+
+* (?? points) Using Moment.js for parsing/displaying timestamps
+    * Implemented
+
 * (5 points) vue.js
     * Would like to use vue.js for this project, still tbd
-
-10 points total out of 8 required points
 
 
 ## [Link to Initial Main Project File](src/app.js)
@@ -103,3 +107,4 @@ An Example Trade with Embedded Comments:
 ## Annotations / References Used
 
 1. [IEX Market API](https://iextrading.com/developer/docs/)
+2. [Node-convict](https://github.com/mozilla/node-convict/blob/master/README.md)
