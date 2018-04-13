@@ -61,4 +61,4 @@ app.post('/', (req, res) => {
     });
 });
 
-app.listen(config.get('env'));
+app.listen(config.get('port'));
