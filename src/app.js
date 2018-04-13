@@ -6,6 +6,7 @@
 */
 
 //requires
+const config = require('./config');
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
@@ -60,4 +61,4 @@ app.post('/', (req, res) => {
     });
 });
 
-app.listen(3000);
+app.listen(config.get('env'));

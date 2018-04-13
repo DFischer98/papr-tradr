@@ -32,11 +32,13 @@ const TradeSchema = new mongoose.Schema({
 mongoose.model('User', UserSchema);
 mongoose.model('Trade', TradeSchema);
 
+console.log(config.get('env'));
 // Connect to DB
 if (config.get('env') === 'production'){
-	mongoose.connect(`mongodb://${config.get('db.user')}:${config.get('db.pwd')}@${config.get('db.host')}/${config.get('db.name')}`);
+	mongoose.connect(`mongodb://${config.get('db.user')}:${config.get('db.pwd')}@${config.get('db.host')}/${config.get('db.name')}?authSource=admin`);
 }
 //no auth in development
 else {
 	mongoose.connect(`mongodb://${config.get('db.host')}/${config.get('db.name')}`);
 }
+
