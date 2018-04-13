@@ -1,3 +1,8 @@
+/* Using Node-convict for managing configurations between dev and prod
+ * This file contains non-sensitive default values
+ * The actual credentials live in ./config/[env].json
+ * Those are NOT commited to version control
+ */
 var convict = require('convict');
 
 // Config Schema
