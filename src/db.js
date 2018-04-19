@@ -1,13 +1,25 @@
 const mongoose = require('mongoose');
 const URLSlugs = require('mongoose-url-slugs');
-const config = require('./config.js');
+const config   = require('../config/config.js');
+const bcrypt   = require('bcrypt-nodejs');
 
 // user schema, changes TBD depending on implementation of passport auth
 const UserSchema = new mongoose.Schema({
-	username: String,
-	email: String,
-    password: {type: String, unique: true, required: true}
+	local : {
+		username: String,
+		password: String
+	}
 });
+
+// generating a hash
+UserSchema.methods.generateHash = function(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+// checking if password is valid
+UserSchema.methods.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.local.password);
+};
 
 //trade schema
 const TradeSchema = new mongoose.Schema({
@@ -40,4 +52,3 @@ if (config.get('env') === 'production'){
 else {
 	mongoose.connect(`mongodb://${config.get('db.host')}/${config.get('db.name')}`);
 }
-

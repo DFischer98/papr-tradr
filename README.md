@@ -108,3 +108,4 @@ An Example Trade with Embedded Comments:
 
 1. [IEX Market API](https://iextrading.com/developer/docs/)
 2. [Node-convict](https://github.com/mozilla/node-convict/blob/master/README.md)
+3. [Passport Local-Auth Strategy Tutorial](https://scotch.io/tutorials/easy-node-authentication-setup-and-local)
