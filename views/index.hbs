@@ -1,24 +1,12 @@
 <h1>Daniel's Final Project</h1>
-<p class='subheader'>Hosted on Digital Ocean because I wanted to spend 4 hours configuring a linux box</p>
-<div class="container inset">
-    <p>Here's a form and some stuff.</p>
-    <form class="trade-form" action="/" method="post">
-        <label for="ticker">Ticker</label>
-        <input type="text" name="ticker">
-        <label>Action</label>
-        <input type="radio" value="buy" id="buy" name="action">
-            <label class="radio-label" id="buy-label" for="buy">Buy</label>
-        <input type="radio" value="sell" id="sell" name="action">
-            <label class="radio-label" id="sell-label" for="sell">Sell</label>
-        <button type="submit">Submit</button>
-    </form>
-</div>
+<p class='subheader'>Milestone 3. Go ahead and <a href="/signup">create an account</a> to make a trade!</p>
+
 <div class="container">
     {{#if trade}}
     <p>Trades found:</p>
     <ul>
         {{#each trade}}
-        <li>{{ticker}} • {{action}} • {{formatDateTime time}}</li>
+        <li><a href="/trades/{{slug}}">{{ticker}} • {{action}} • {{formatDateTime time}}</a></li>
         {{/each}}
     </ul>
     {{else}}

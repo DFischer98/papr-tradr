@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
 	local : {
 		username: String,
 		password: String
-	}
+	},
 });
 
 // generating a hash
@@ -26,7 +26,8 @@ const TradeSchema = new mongoose.Schema({
 	_user: {type: mongoose.Schema.Types.ObjectId,
 			ref: 'User'},
     ticker: String,
-    slug: String,
+	companyName: String,
+	sector: String,
 	priceAtCreation: Number,
 	action: String,
 	confidence: String,
@@ -40,6 +41,8 @@ const TradeSchema = new mongoose.Schema({
 	],
 	time: { type: Date, default: Date.now }
 });
+
+TradeSchema.plugin(URLSlugs('ticker action priceAtCreation'));
 
 mongoose.model('User', UserSchema);
 mongoose.model('Trade', TradeSchema);

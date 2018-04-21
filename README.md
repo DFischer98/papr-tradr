@@ -91,14 +91,17 @@ An Example Trade with Embedded Comments:
 * (5 points) Integrate user authentication
     * Using passport for user auth
 
-* (?? points) Using Node-convict for environment confguration
-    * Implemented
+* (2 points) Using Node-convict for environment confguration
+    * Wasn't too difficult
 
-* (?? points) Using Moment.js for parsing/displaying timestamps
-    * Implemented
+* (1 point) Using Moment.js for parsing/displaying timestamps
+    * Implemented within a handlebars helper, very easy to learn/user
 
-* (5 points) vue.js
-    * Would like to use vue.js for this project, still tbd
+* (3 points) Using node-fetch to make promise-based calls to remote API
+    * Used to connect to IEX market API and fetch price/name as well as validate
+    * Great exercise for figuring out promises
+
+* (1 point) Using basic express-sanitize-escape middleware
 
 
 ## [Link to Initial Main Project File](src/app.js)
@@ -109,3 +112,5 @@ An Example Trade with Embedded Comments:
 1. [IEX Market API](https://iextrading.com/developer/docs/)
 2. [Node-convict](https://github.com/mozilla/node-convict/blob/master/README.md)
 3. [Passport Local-Auth Strategy Tutorial](https://scotch.io/tutorials/easy-node-authentication-setup-and-local)
+4. [Using Fetch](https://codeburst.io/4-ways-for-making-http-s-requests-with-node-js-c524f999942d)
+5. [express-sanitize-escape](https://www.npmjs.com/package/express-sanitize-escape)

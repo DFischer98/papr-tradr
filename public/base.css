@@ -5,6 +5,14 @@ body{
     margin: 0px;
 }
 
+a{
+    text-decoration: none;
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
 ::-moz-selection{
     color: #2F525A;
     background: #61FFD0;
@@ -22,6 +30,20 @@ h1{
     margin: 20px 0px 5px 10px;
 }
 
+.navbar{
+    height: 64px;
+    background-color: #cde3f6;
+    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+}
+
+.navbar-item{
+    display: inline-block;
+    float: left;
+    height: 100%;
+    padding: 0px 10px 0px 10px;
+    line-height: 64px;
+}
+
 .subheader{
     color: #666;
     margin: 0;
@@ -29,6 +51,12 @@ h1{
     font-family: 'Roboto', 'Helvetica', sans-serif;
     font-size: 14pt;
     font-weight: 300;
+}
+
+.disclaimer{
+    color: #666;
+    font-size: 9pt;
+    margin: 5px 0px 5px 0px;
 }
 
 .container{
@@ -55,49 +83,13 @@ input[type="text"], input[type="password"]{
     font-size: 10pt;
 }
 
-input:focus{
+#ticker-input{
+    text-transform: uppercase;
+}
+
+input:focus, textarea:focus{
     outline: none;
 }
-
-
-.input-card{
-    margin: 15vh auto 40px auto;
-    background-color: #FFF;
-    border-radius: 5px;
-    width: 275px;
-    height: 300px;
-    padding: 15px;
-    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
-
-    border-width: 6px 0px 0px 0px;
-    border-style: solid;
-    border-color: #47EBD7;
-}
-
-.input-card h3{
-    text-align: center;
-    font-size: 14pt;
-}
-
-.input-card input{
-    border: 1px solid #eee;
-    width: 221px;
-    margin: 25px auto 10px auto;
-}
-
-.input-card input[type="submit"]{
-    width: 250px;
-    padding: 10px;
-    font-size: 10pt;
-    border-radius: 5px;
-    display: block;
-    background: #47EBD7;
-    color: #2a6357;
-    cursor: pointer;
-    font-size: 12pt;
-    border: none;
-}
-
 
 
 label{
@@ -107,7 +99,8 @@ label{
     display: block;
 }
 
-input[type="text"]:focus{
+
+input[type="text"]:focus textarea{
     outline: none;
 }
 
@@ -128,7 +121,12 @@ input[type="radio"]{
     display: none;
 }
 
+.margin-small{
+    margin: 5px 0px 5px 0px !important;
+}
+
 .radio-label{
+    margin-top: 8px !important;
     background-color: #FFF;
     padding: .3em 1em;
     cursor: pointer;
@@ -144,15 +142,21 @@ input[type="radio"]{
     -moz-transition: box-shadow .5s ease;
 }
 
-#buy-label{
+#buy-label, #high-label{
     border-radius: 5px 0px 0px 5px;
 }
 
-#sell-label{
+#med-label{
+   margin-left: -3px;
+   border-left: 1px solid #eee;
+}
+
+#sell-label, #low-label{
     margin-left: -3px;
     border-radius: 0px 5px 5px 0px;
     border-left: 1px solid #eee;
 }
+
 
 input[type="radio"]:checked + #buy-label{
     background: linear-gradient(-190deg, #b3f9b2 0%, #8df53f 100%);
@@ -168,8 +172,30 @@ input[type="radio"]:checked + #sell-label{
     width: 46px;
 }
 
+
+input[type="radio"]:checked + #high-label{
+    background: linear-gradient(-190deg, #b3f9b2 0%, #8df53f 100%);
+    box-shadow: 0px 2px 7px 0px rgba(30, 156, 7, 0.5);
+    color: #375e36;
+}
+
+input[type="radio"]:checked + #med-label{
+    background: linear-gradient(-190deg, #FDEB71 0%, #F8D800 100%);
+    box-shadow: 0px 2px 7px 0px rgba(220, 200, 80, 0.5);
+    color: #665c13;
+    border-left: 0px;
+    width: 46px;
+}
+
+input[type="radio"]:checked + #low-label{
+    background: linear-gradient(-190deg, #FEB692 0%, #EA5455 100%);
+    box-shadow: 1px 1px 6px 0px rgba(138, 3, 22, 0.5);
+    color: #603d3d;
+    border-left: 0px;
+    width: 46px;
+}
+
 button[type="submit"]{
-    margin-top: 30px;
     width: 100px;
     display: block;
     padding: .7em 1em;
@@ -198,4 +224,84 @@ button[type="submit"]:hover{
 
 li{
     list-style-type: none;
+}
+
+table{
+    border-collapse: collapse;
+}
+
+table tr td{
+    border: 1px solid black;
+}
+
+td{
+    padding: 5px;
+    max-width: 120px;
+}
+
+.input-card{
+    margin: 15vh auto 40px auto;
+    background-color: #FFF;
+    border-radius: 5px;
+    width: 275px;
+    min-height: 300px;
+    padding: 15px;
+    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+
+    border-width: 6px 0px 0px 0px;
+    border-style: solid;
+    border-color: #47EBD7;
+}
+
+.input-card h3{
+    text-align: center;
+    font-size: 14pt;
+}
+
+.input-card input{
+    border: 1px solid #eee;
+    width: 221px;
+    margin: 25px auto 10px auto;
+    color: #333;
+}
+
+.input-card input[type="submit"]{
+    width: 250px;
+    padding: 10px;
+    font-size: 10pt;
+    border-radius: 5px;
+    display: block;
+    background: #47EBD7;
+    color: #2a6357;
+    cursor: pointer;
+    font-size: 12pt;
+    border: none;
+}
+
+.input-card textarea{
+    display: block;
+    border-radius: 5px;
+    border: 1px solid #eee;
+    padding: .7em 1em;
+    font-size: 10pt;
+    color: #333;
+    width: 90%;
+    resize: none;
+}
+
+.input-card label{
+    margin-top: 15px;
+}
+
+.comment{
+    background-color: #eee;
+    padding: 15px;
+    margin: 10px 5px 10px 0px;
+    display: inline-block;
+}
+
+.comment-attribution{
+    color: #666;
+    font-size: 9pt;
+    margin: 0;
 }

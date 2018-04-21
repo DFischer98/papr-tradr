@@ -1,0 +1,55 @@
+<div class="container">
+    <table>
+        <tr>
+            <td>User</td>
+            <td>{{trade._user.local.username}}</td>
+        </tr>
+        <tr>
+            <td>Ticker</td>
+            <td>{{trade.ticker}}</td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>{{trade.companyName}}</td>
+        </tr>
+        <tr>
+            <td>Sector</td>
+            <td>{{trade.sector}}</td>
+        </tr>
+        <tr>
+            <td>Bought at</td>
+            <td>{{trade.priceAtCreation}}</td>
+        </tr>
+        <tr>
+            <td>Action</td>
+            <td>{{trade.action}}</td>
+        </tr>
+        <tr>
+            <td>Confidence</td>
+            <td>{{trade.confidence}}</td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td>{{trade.description}}</td>
+        </tr>
+        <tr>
+            <td>Date</td>
+            <td>{{formatDateTime trade.time}}</td>
+        </tr>
+    </table>
+    {{#each trade.comments}}
+        <div class="comment">
+            <p>{{content}}</p>
+            <p class="comment-attribution">By {{_user.local.username}} on {{formatDate time}}</p>
+        </div>
+    {{/each}}
+    {{#if user}}
+        <p>Leave a comment!</p>
+        <form class="" action="" method="post">
+            <textarea name="comment" rows="8" cols="80"></textarea>
+            <input type="submit" value="Submit"/>
+        </form>
+    {{else}}
+        <p>You must be logged in to leave a comment!</p>
+    {{/if}}
+</div>
