@@ -1,0 +1,20 @@
+{{#if trade}}
+<div class="trade-row-container card">
+    <div class="trade-row trade-row-header">
+        <div class="trade-row-item">Stock</div>
+        <div class="trade-row-item trade-row-action">Action @ Price</div>
+        <div class="trade-row-item trade-row-date">Executing User</div>
+    </div>
+    {{#each trade}}
+    <a href="/trades/{{slug}}">
+        <div class="trade-row">
+            <div class="trade-row-item">{{ticker}}</div>
+            <div class="trade-row-item trade-row-action">{{action}} @ ${{priceAtCreation}} {{{formatPercent percentChange}}}</div>
+            <div class="trade-row-item trade-row-date">By {{_user.local.username}} at {{formatDateTime time}}</div>
+        </div>
+    </a>
+    {{/each}}
+</div>
+{{else}}
+<p>No records found. Submit one!</p>
+{{/if}}

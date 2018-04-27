@@ -1,15 +1,20 @@
-<h1>Daniel's Final Project</h1>
-<p class='subheader'>Milestone 3. Go ahead and <a href="/signup">create an account</a> to make a trade!</p>
-
-<div class="container">
-    {{#if trade}}
-    <p>Trades found:</p>
-    <ul>
-        {{#each trade}}
-        <li><a href="/trades/{{slug}}">{{ticker}} • {{action}} • {{formatDateTime time}}</a></li>
-        {{/each}}
-    </ul>
-    {{else}}
-    <p>No records found. Submit one!</p>
-    {{/if}}
+<div class="background-container">
+    <div class="centered-container">
+        <h1>Daniel's Final Project</h1>
+        <p class='subheader'>A web-app for submitting paper trades</p>
+        <form class="trade-filter" action="/trades" method="get">
+            <label for="category">Sort by</label>
+            <select class="trade-filter-select" name="category">
+                <option value="stock">Stock</option>
+                <option value="profit">Profit</option>
+                <option value="date">Date</option>
+            </select>
+            <input type="radio" value="asc" id="buy" name="sort" required>
+                <label class="radio-label" id="buy-label" for="buy">Asc&uarr;</label>
+            <input type="radio" value="desc" id="sell" name="sort" required>
+                <label class="radio-label" id="sell-label" for="sell">Desc&darr;</label>
+            <button type="submit">Sort</button>
+        </form>
+    </div>
+    {{> trade-table}}
 </div>

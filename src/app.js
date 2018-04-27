@@ -37,7 +37,9 @@ app.use(passport.session());
 const hbs = exphbs.create({
     helpers: {
         formatDateTime: function (value) { return moment(value).format("MM-DD-YY HH:mm"); },
-        formatDate: function (value) { return moment(value).format("MM/DD/YY"); }
+        formatDate: function (value) { return moment(value).format("MM/DD/YY"); },
+        formatPercent: function (value) { if (value < 0){return '<span class="percent-change negative">(' + (value).toFixed(2) + '%)</span>'}
+            else{return '<span class="percent-change positive">(' + (value).toFixed(2) + '%)</span>'}}
     },
     defaultLayout: 'main',
     extname: '.hbs'
@@ -68,10 +70,12 @@ moment().format();
 
 //render homepage
 app.get('/', (req, res) => {
-    Trade.find({}, (err, result) => {
-        if (result){
-            let count = result.length;
-            res.render('index', {trade : result, count : count});
+    Trade.find({}).populate('_user', 'local.username').exec((err, trades) => {
+        if (trades){
+            //attach extra data to results via current prices retrieved from API
+            getStockPrices(trades).then(result => {
+                res.render('index', {trade : result});
+            });
         }
     })
 });
@@ -116,7 +120,6 @@ app.get('/profile', isLoggedIn, (req, res) => {
             console.error(err);
         }
         else{
-            console.log(result);
             res.render('profile', {trade : result});
         }
     });
@@ -127,6 +130,30 @@ app.get('/profile', isLoggedIn, (req, res) => {
  *      Trades
  * =========================
  */
+
+//render list of trades and sort them if parameters are supplied
+ app.get('/trades', (req, res) => {
+     //handle parameters
+    if (req.query){
+        //mongoose sorting for ticker and date
+        if(req.query.category !== 'profit'){
+            //set sorting config objects
+            let sortConfig = {};
+            (req.query.category == 'stock') ? sortConfig.ticker = req.query.sort : sortConfig.date = req.query.sort;
+            console.log(sortConfig);
+            Trade.find({}).sort(sortConfig).exec((err, result) =>{
+                if (err){
+                    console.error(err);
+                }
+                else{
+                    getStockPrices.then().bind(trades);
+                    res.render('trades', {trade : result});
+                }
+            })
+        }
+
+    }
+ });
 
  app.get('/new-trade', isLoggedIn, (req, res) => {
     res.render('new-trade');
@@ -152,14 +179,16 @@ app.get('/profile', isLoggedIn, (req, res) => {
             // }
             else{
                 //parse response data and save trade
-                response.json().then(json => {
+                parseJson(response).then(json => {
+                    quote = json[req.body.ticker.toUpperCase()].quote;
+                    console.log(quote);
                     const newTrade = Trade({
                        _user: req.user._id,
 
-                       ticker: json.quote.symbol,
-                       companyName: json.quote.companyName,
-                       sector: json.quote.sector,
-                       priceAtCreation: json.quote.iexRealtimePrice,
+                       ticker: quote.symbol,
+                       companyName: quote.companyName,
+                       sector: quote.sector,
+                       priceAtCreation: quote.iexRealtimePrice,
 
                        action: req.body.action,
                        confidence: req.body.confidence,
@@ -224,8 +253,41 @@ app.post('/trades/:tradeSlug', (req, res) => {
 //helper for retrieving stock info
 //returns a promise with the data from the given url
 function fetchStockInfo(ticker){
-    const url = `https://api.iextrading.com/1.0/stock/${ticker}/batch?types=quote`;
+    const url = `https://api.iextrading.com/1.0/stock/market/batch?symbols=${ticker}&types=quote`;
     return fetch(url);
+}
+
+//helper for taking trade objects from DB query and attaching the current price for each
+//returns a promise
+function getStockPrices(trades){
+    tickersInUse = [];
+    for (let i = 0; i < trades.length; i++){
+        if (!tickersInUse.includes(trades[i].ticker)){
+            tickersInUse.push(trades[i].ticker);
+        }
+    }
+    let queryString = tickersInUse.join(',');
+    let url  = `https://api.iextrading.com/1.0/stock/market/batch?symbols=${queryString}&types=quote`;
+    let stockFetch = fetch(url);
+    return stockFetch.then(parseJson).then(json => {
+        //populate results with price data from fetch
+        let retrievedStocks = Object.keys(json);
+        let stockPrices = {};
+        retrievedStocks.forEach(stock => {
+            stockPrices[stock] = json[stock].quote.latestPrice;
+        });
+        trades.forEach(trade => {
+            trade.currentPrice = stockPrices[trade.ticker];
+            trade.percentChange = ((trade.currentPrice - trade.priceAtCreation) / trade.priceAtCreation)*100;
+        });
+        console.log(trades);
+        return trades;
+    });
+}
+
+//simple wrapper function for using json parsing in promises
+function parseJson(input){
+    return input.json();
 }
 
 app.listen(config.get('port'));

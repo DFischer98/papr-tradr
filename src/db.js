@@ -29,6 +29,8 @@ const TradeSchema = new mongoose.Schema({
 	companyName: String,
 	sector: String,
 	priceAtCreation: Number,
+	currentPrice: Number,
+	percentChange: Number, 
 	action: String,
 	confidence: String,
 	description: String,
