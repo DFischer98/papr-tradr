@@ -74,6 +74,7 @@ h1{
     background-color: #E5EAED;
     position: absolute;
     width: 100vw;
+    min-height: 100vh;
 }
 
 input[type="text"], input[type="password"]{

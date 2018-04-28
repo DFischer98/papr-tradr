@@ -71,11 +71,14 @@ moment().format();
 //render homepage
 app.get('/', (req, res) => {
     Trade.find({}).populate('_user', 'local.username').exec((err, trades) => {
-        if (trades){
+        if (trades.length > 0){
             //attach extra data to results via current prices retrieved from API
             getStockPrices(trades).then(result => {
                 res.render('index', {trade : result});
             });
+        }
+        else{
+            res.render('index');
         }
     })
 });
@@ -302,7 +305,9 @@ function getStockPrices(trades){
         let retrievedStocks = Object.keys(json);
         let stockPrices = {};
         retrievedStocks.forEach(stock => {
-            stockPrices[stock] = json[stock].quote.latestPrice;
+            if (json[stock].quote){
+                stockPrices[stock] = json[stock].quote.latestPrice;
+            }
         });
         trades.forEach(trade => {
             trade.currentPrice = stockPrices[trade.ticker];
