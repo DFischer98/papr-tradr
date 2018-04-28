@@ -115,12 +115,14 @@ app.get('/logout', (req, res) => {
 
 app.get('/profile', isLoggedIn, (req, res) => {
     //get user associated trades
-    Trade.find({_user : req.user._id}, (err, result) => {
+    Trade.find({_user : req.user._id}).populate('_user', 'local.username').exec((err, result) => {
         if (err){
             console.error(err);
         }
         else{
-            res.render('profile', {trade : result});
+            getStockPrices(result).then(result => {
+                res.render('profile', {trade : result});
+            });
         }
     });
 });
@@ -134,25 +136,46 @@ app.get('/profile', isLoggedIn, (req, res) => {
 //render list of trades and sort them if parameters are supplied
  app.get('/trades', (req, res) => {
      //handle parameters
-    if (req.query){
+    if (req.query.category){
         //mongoose sorting for ticker and date
         if(req.query.category !== 'profit'){
             //set sorting config objects
             let sortConfig = {};
-            (req.query.category == 'stock') ? sortConfig.ticker = req.query.sort : sortConfig.date = req.query.sort;
-            console.log(sortConfig);
-            Trade.find({}).sort(sortConfig).exec((err, result) =>{
+            (req.query.category == 'stock') ? sortConfig.ticker = req.query.sort : sortConfig.time = req.query.sort;
+            Trade.find({}).populate('_user', 'local.username').sort(sortConfig).exec((err, result) =>{
                 if (err){
                     console.error(err);
                 }
                 else{
-                    getStockPrices.then().bind(trades);
-                    res.render('trades', {trade : result});
+                    getStockPrices(result).then(trades => {
+                        res.render('trades', {trade : trades});
+                    });
                 }
             })
         }
-
+        //sort by Profit
+        else{
+            Trade.find({}).populate('_user', 'local.username').exec((err, result) =>{
+                getStockPrices(result).then(trades => {
+                    //sort by percentChange attribute
+                    trades.sort(percentChangeComparator(req.query.sort));
+                    res.render('trades', {trade : trades});
+                });
+            });
+        }
     }
+    //no sorting
+    else{
+        Trade.find({}).populate('_user', 'local.username').exec((err, trades) => {
+            if (trades){
+                //attach extra data to results via current prices retrieved from API
+                getStockPrices(trades).then(result => {
+                    res.render('trades', {trade : result});
+                });
+            }
+        })
+    }
+
  });
 
  app.get('/new-trade', isLoggedIn, (req, res) => {
@@ -172,16 +195,10 @@ app.get('/profile', isLoggedIn, (req, res) => {
                 //TODO: handle invalid ticker better
                 res.redirect('/new-trade');
             }
-            //TODO: handle this on the frontend and create confidence field in form
-            // else if(!req.body.action || !req.body.confidence){
-            //     console.log('Missing form data!');
-            //     res.redirect('/new-trade');
-            // }
             else{
                 //parse response data and save trade
                 parseJson(response).then(json => {
                     quote = json[req.body.ticker.toUpperCase()].quote;
-                    console.log(quote);
                     const newTrade = Trade({
                        _user: req.user._id,
 
@@ -213,14 +230,21 @@ app.get('/profile', isLoggedIn, (req, res) => {
  });
 
  app.get('/trades/:tradeSlug', (req, res) => {
-    Trade.findOne({slug : req.params.tradeSlug}).populate('_user', 'local.username').populate('comments._user').exec((err, result) => {
-        if (err){
-            //TODO: More gracefully handle failing lookup
-            res.redirect('/');
+    Trade.findOne({slug :
+         req.params.tradeSlug}).populate('_user', 'local.username').populate('comments._user').exec((err, result) => {
+        console.log(result);
+        if (err || result === null){
+            res.redirect('/trades');
         }
         else{
-            res.render('trade-info', {trade : result});
-            console.log(result.comments);
+            getStockPrices(result).then(result => {
+                trade = result[0];
+                isShort = true;
+                if (trade.action === 'buy'){
+                    isShort = false;
+                }
+                res.render('trade-info', {trade : trade, short : isShort});
+            });
         }
     });
 });
@@ -261,6 +285,10 @@ function fetchStockInfo(ticker){
 //returns a promise
 function getStockPrices(trades){
     tickersInUse = [];
+    //handle being passed just one trade object
+    if (!(trades instanceof Array)){
+        trades = [trades];
+    }
     for (let i = 0; i < trades.length; i++){
         if (!tickersInUse.includes(trades[i].ticker)){
             tickersInUse.push(trades[i].ticker);
@@ -278,9 +306,14 @@ function getStockPrices(trades){
         });
         trades.forEach(trade => {
             trade.currentPrice = stockPrices[trade.ticker];
-            trade.percentChange = ((trade.currentPrice - trade.priceAtCreation) / trade.priceAtCreation)*100;
+            //swap percentage if they shorted the stock
+            if (trade.action === 'buy'){
+                trade.percentChange = ((trade.currentPrice - trade.priceAtCreation) / trade.priceAtCreation)*100;
+            }
+            else {
+                trade.percentChange = ((trade.priceAtCreation - trade.currentPrice) / trade.priceAtCreation)*100;
+            }
         });
-        console.log(trades);
         return trades;
     });
 }
@@ -288,6 +321,26 @@ function getStockPrices(trades){
 //simple wrapper function for using json parsing in promises
 function parseJson(input){
     return input.json();
+}
+
+//helper function for sorting via percent change
+function percentChangeComparator(sortMethod){
+    if (sortMethod === 'asc'){
+        return function(a, b){
+            if (a.percentChange > b.percentChange){
+                return -1;
+            }
+            return 1;
+        }
+    }
+    else{
+        return function(a, b){
+            if (a.percentChange < b.percentChange){
+                return -1;
+            }
+            return 1;
+        }
+    }
 }
 
 app.listen(config.get('port'));

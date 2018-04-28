@@ -1,55 +1,77 @@
-<div class="container">
-    <table>
-        <tr>
-            <td>User</td>
-            <td>{{trade._user.local.username}}</td>
-        </tr>
-        <tr>
-            <td>Ticker</td>
-            <td>{{trade.ticker}}</td>
-        </tr>
-        <tr>
-            <td>Name</td>
-            <td>{{trade.companyName}}</td>
-        </tr>
-        <tr>
-            <td>Sector</td>
-            <td>{{trade.sector}}</td>
-        </tr>
-        <tr>
-            <td>Bought at</td>
-            <td>{{trade.priceAtCreation}}</td>
-        </tr>
-        <tr>
-            <td>Action</td>
-            <td>{{trade.action}}</td>
-        </tr>
-        <tr>
-            <td>Confidence</td>
-            <td>{{trade.confidence}}</td>
-        </tr>
-        <tr>
-            <td>Description</td>
-            <td>{{trade.description}}</td>
-        </tr>
-        <tr>
-            <td>Date</td>
-            <td>{{formatDateTime trade.time}}</td>
-        </tr>
-    </table>
-    {{#each trade.comments}}
-        <div class="comment">
-            <p>{{content}}</p>
-            <p class="comment-attribution">By {{_user.local.username}} on {{formatDate time}}</p>
+<div class="background-container">
+    <div class="card trade-row-container mt-20">
+        <div class="trade-info-row trade-info-header">
+            <div class="trade-info-header-item">
+                {{trade.ticker}} — ${{trade.currentPrice}}
+            </div>
+            <div class="trade-info-header-item align-right">
+                    {{formatDateTime trade.date}}
+            </div>
         </div>
-    {{/each}}
-    {{#if user}}
-        <p>Leave a comment!</p>
-        <form class="" action="" method="post">
-            <textarea name="comment" rows="8" cols="80"></textarea>
-            <input type="submit" value="Submit"/>
-        </form>
-    {{else}}
-        <p>You must be logged in to leave a comment!</p>
-    {{/if}}
+        <div class="trade-info-row">
+            <div class="trade-info-row-item">
+                <strong>Company</strong>
+            </div>
+            <div class="trade-info-row-item">{{trade.companyName}}</div>
+        </div>
+        <div class="trade-info-row alternate-row">
+            <div class="trade-info-row-item">
+                <strong>Sector</strong>
+            </div>
+            <div class="trade-info-row-item">{{trade.sector}}</div>
+        </div>
+        <div class="trade-info-row">
+            <div class="trade-info-row-item">
+                <strong>User</strong>
+            </div>
+            <div class="trade-info-row-item">{{trade._user.local.username}}</div>
+        </div>
+        <div class="trade-info-row alternate-row">
+            <div class="trade-info-row-item">
+                <strong>Profit</strong>
+            </div>
+            <div class="trade-info-row-item">
+                {{#if short}}
+                    Shorted at ${{trade.priceAtCreation}} for {{{formatPercent trade.percentChange}}} profit
+                {{else}}
+                    Bought at ${{trade.priceAtCreation}} for {{{formatPercent trade.percentChange}}} profit
+                {{/if}}
+            </div>
+        </div>
+        <div class="trade-info-row">
+            <div class="trade-info-row-item">
+                <strong>Confidence</strong>
+            </div>
+            <div class="trade-info-row-item">
+                <span class="{{trade.confidence}}-confidence">{{trade.confidence}}</span>
+            </div>
+        </div>
+        {{#if trade.description}}
+            <div class="trade-info-row alternate-row">
+                <div class="trade-info-row-item">
+                    <strong>Description</strong>
+                </div>
+                <div class="trade-info-row-item">
+                    {{trade.description}}
+                </div>
+            </div>
+        {{/if}}
+    </div>
+    <div class="centered-container">
+        {{#each trade.comments}}
+            <div class="card comment">
+                <p>{{content}}</p>
+                <p class="comment-attribution">By {{_user.local.username}} on {{formatDate time}}</p>
+            </div>
+        {{/each}}
+        {{#if user}}
+            <p>Leave a comment!</p>
+            <form class="" action="" method="post">
+                <textarea name="comment" rows="8" cols="80"></textarea>
+                <input type="submit" value="Submit"/>
+            </form>
+        {{else}}
+            <p>You must be logged in to leave a comment!</p>
+        {{/if}}
+    </div>
 </div>

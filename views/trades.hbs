@@ -1,3 +1,18 @@
 <div class="background-container">
+    <div class="centered-container">
+        <form class="trade-filter" action="/trades" method="get">
+            <label for="category">Sort by</label>
+            <select class="trade-filter-select" name="category">
+                <option value="stock">Stock</option>
+                <option value="profit">Profit</option>
+                <option value="date">Date</option>
+            </select>
+            <input type="radio" value="asc" id="buy" name="sort" required checked>
+                <label class="radio-label" id="buy-label" for="buy">Asc&uarr;</label>
+            <input type="radio" value="desc" id="sell" name="sort" required>
+                <label class="radio-label" id="sell-label" for="sell">Desc&darr;</label>
+            <button class="sort-button" type="submit">Sort</button>
+        </form>
+    </div>
     {{> trade-table}}
 </div>

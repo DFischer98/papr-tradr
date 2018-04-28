@@ -1,7 +1,7 @@
 <div class="background-container">
     <div class="centered-container">
         <h1>Daniel's Final Project</h1>
-        <p class='subheader'>A web-app for submitting paper trades</p>
+        <p class='subheader'>A web-app for submitting paper trades. <a href="/login">Log in</a> to get started.</p>
         <form class="trade-filter" action="/trades" method="get">
             <label for="category">Sort by</label>
             <select class="trade-filter-select" name="category">
@@ -9,11 +9,11 @@
                 <option value="profit">Profit</option>
                 <option value="date">Date</option>
             </select>
-            <input type="radio" value="asc" id="buy" name="sort" required>
+            <input type="radio" value="asc" id="buy" name="sort" required checked>
                 <label class="radio-label" id="buy-label" for="buy">Asc&uarr;</label>
             <input type="radio" value="desc" id="sell" name="sort" required>
                 <label class="radio-label" id="sell-label" for="sell">Desc&darr;</label>
-            <button type="submit">Sort</button>
+            <button class="sort-button" type="submit">Sort</button>
         </form>
     </div>
     {{> trade-table}}

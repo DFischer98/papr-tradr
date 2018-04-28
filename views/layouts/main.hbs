@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>AIT Final Proj</title>
-        <link href="https://fonts.googleapis.com/css?family=Lato|Roboto:100,300,400" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto:100,300,400" rel="stylesheet">
         <link rel="stylesheet" href="/base.css">
     </head>
     <body>
@@ -11,6 +11,7 @@
             <a href="/"><div class="navbar-item">Home</div></a>
             {{#if user}}
                 <a href="/profile"><div class="navbar-item">Profile</div></a>
+                <a href="/new-trade"><div class="navbar-item">New Trade</div></a>
                 <a href="/logout"><div class="navbar-item">Logout</div></a>
             {{else}}
                 <a href="/login"><div class="navbar-item">Login</div></a>

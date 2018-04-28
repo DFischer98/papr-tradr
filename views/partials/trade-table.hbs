@@ -1,3 +1,4 @@
+
 {{#if trade}}
 <div class="trade-row-container card">
     <div class="trade-row trade-row-header">
@@ -8,7 +9,7 @@
     {{#each trade}}
     <a href="/trades/{{slug}}">
         <div class="trade-row">
-            <div class="trade-row-item">{{ticker}}</div>
+            <div class="trade-row-item">{{ticker}} — ${{currentPrice}}</div>
             <div class="trade-row-item trade-row-action">{{action}} @ ${{priceAtCreation}} {{{formatPercent percentChange}}}</div>
             <div class="trade-row-item trade-row-date">By {{_user.local.username}} at {{formatDateTime time}}</div>
         </div>

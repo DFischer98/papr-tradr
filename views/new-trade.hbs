@@ -3,16 +3,16 @@
         <p>Use this form to submit a trade!</p>
         <form class="trade-form" action="/new-trade" method="post">
             <label for="ticker">Ticker*</label>
-            <input class="margin-small" type="text" name="ticker" id="ticker-input" placeholder="$AAPL" required>
-
+            <input class="margin-small" type="text" name="ticker" id="ticker-input" placeholder="AAPL" maxlength="5" required>
+            <div id="ticker-info"></div>
             <label>Action*</label>
             <input type="radio" value="buy" id="buy" name="action" required>
                 <label class="radio-label" id="buy-label" for="buy">Buy</label>
-            <input type="radio" value="sell" id="sell" name="action" required>
-                <label class="radio-label" id="sell-label" for="sell">Sell</label>
+            <input type="radio" value="short" id="sell" name="action" required>
+                <label class="radio-label" id="sell-label" for="sell">Short</label>
 
             <label>Confidence*</label>
-            <input type="radio" value="sell" id="high" name="confidence" required>
+            <input type="radio" value="high" id="high" name="confidence" required>
                 <label class="radio-label" id="high-label" for="high">High</label>
 
             <input type="radio" value="medium" id="medium" name="confidence" required>
@@ -24,7 +24,8 @@
             <label for="description">Description</label>
             <textarea name="description" rows="8" cols="80" placeholder="A brief description of why you executed this trade"></textarea>
             <p class="disclaimer">* required items</p>
-            <button type="submit">Submit</button>
+            <button id="new-trade-submit" type="submit">Submit</button>
         </form>
     </div>
 </div>
+<script type="text/javascript" src="/trade-verification.js"></script>

@@ -74,7 +74,6 @@ h1{
     background-color: #E5EAED;
     position: absolute;
     width: 100vw;
-    height: 100vh;
 }
 
 input[type="text"], input[type="password"]{
@@ -243,7 +242,6 @@ td{
 .card{
     box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
     border-radius: 5px;
-
 }
 
 .input-card{
@@ -282,7 +280,7 @@ td{
     border: none;
 }
 
-.input-card textarea{
+textarea{
     display: block;
     border-radius: 5px;
     border: 1px solid #eee;
@@ -298,7 +296,7 @@ td{
 }
 
 .comment{
-    background-color: #eee;
+    background-color: #fff;
     padding: 15px;
     margin: 10px 5px 10px 0px;
     display: inline-block;
@@ -313,7 +311,7 @@ td{
 .trade-row-container{
     width: 75%;
     margin: auto;
-    background-color: #eee;
+    background-color: #fff;
     border-radius: 5px 5px 5px 5px;
 }
 
@@ -322,7 +320,6 @@ td{
     background-color: #c5d9e5;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-
 }
 
 .trade-row{
@@ -347,4 +344,104 @@ td{
 
 .positive{
     color: green;
+}
+
+.profile-submit{
+    margin: 10px 0px 10px 0px;
+    width: 250px !important;
+}
+
+.trade-info-row{
+    height: 64px;
+}
+
+.trade-info-header{
+    color: #2a6357;
+    background-color: #24EBD8;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.trade-info-row-item{
+    display: inline-block;
+    width: 45%;
+    padding: 20px 0px 0px 10px;
+    vertical-align: middle;
+}
+
+.trade-info-header-item{
+    display: block;
+    float: left;
+    line-height: 64px;
+    padding: 0px 15px 0px 15px;
+    font-size: 14pt;
+}
+
+.high-confidence{
+    color: green;
+}
+
+.medium-confidence{
+    color: orange;
+}
+
+.low-confidence{
+    color: red;
+}
+
+.align-right{
+    float: right;
+}
+
+.mt-20{
+    margin-top: 20px;
+}
+.alternate-row{
+    background-color: #f1f4ff;
+}
+
+.trade-filter label, .trade-filter button{
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.trade-filter-select{
+    height: 28px;
+    width: 120px;
+    border: none;
+    margin: 5px;
+    box-shadow: 0 2px 6px 0 hsla(0, 0%, 0%, 0.2);
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.trade-filter-select:focus{
+    outline: none;
+}
+
+.sort-button{
+    height: 28px;
+    padding: 0px !important;
+    margin-left: 8px;
+}
+
+#ticker-info{
+    font-size: 10pt;
+    padding-left: 3px;
+}
+
+.loading-stock{
+    color: grey;
+}
+
+.invalid-stock{
+    color: crimson;
+}
+
+.valid-stock{
+    color: #24EBD8;
+}
+
+.center{
+    text-align: center;
 }

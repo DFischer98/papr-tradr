@@ -1,10 +1,10 @@
-<div class="container">
-    <h1>Hello {{user.local.username}}!</h1>
-    <p class="subheader">Below are your trades.</p>
-    {{#if trade}}
-        {{#each trade}}
-            <p><a href="/trades/{{slug}}">{{ticker}} // {{action}} // {{formatDateTime time}}</a></p>
-        {{/each}}
-    {{/if}}
-    <a href="/new-trade"><button type="submit" >Submit a new trade!</button></a>
+<div class="background-container">
+    <div class="centered-container">
+        <h1>Hello {{user.local.username}}!</h1>
+        <a href="/new-trade"><button class="profile-submit" type="submit">Submit a new trade!</button></a>
+
+        <p class="subheader">Below are your trades.</p>
+
+    </div>
+    {{> trade-table}}
 </div>
