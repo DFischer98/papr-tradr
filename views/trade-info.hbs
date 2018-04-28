@@ -60,7 +60,7 @@
     <div class="centered-container">
         {{#each trade.comments}}
             <div class="card comment">
-                <p>{{content}}</p>
+                <p>{{{content}}}</p>
                 <p class="comment-attribution">By {{_user.local.username}} on {{formatDate time}}</p>
             </div>
         {{/each}}
